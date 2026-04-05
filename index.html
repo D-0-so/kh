@@ -10,27 +10,17 @@
 
     <audio id="audio" src="3.mp3"></audio>
 
-    <div id="scene1" class="scene">
-        <svg id='svg' width='400px' viewBox="0 0 188 264" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <radialGradient id="gradient-0" gradientUnits="userSpaceOnUse" cx="-107.308" cy="104.329" r="59.181" gradientTransform="matrix(0.261752, 0.411262, -0.686293, 0.596934, 160.094667, 49.38985)">
-                    <stop offset="0" style="stop-color: rgb(255, 0, 0);"/>
-                    <stop offset="1" style="stop-color: rgb(141, 41, 41);"/>
-                </radialGradient>
-                <radialGradient id="gradient-1" gradientUnits="userSpaceOnUse" cx="113.342" cy="62.644" r="53.882" gradientTransform="matrix(-0.169507, 1.182475, -0.714039, -0.308382, 160.212434, -46.522622)">
-                    <stop offset="0" style="stop-color: rgb(255, 0, 0);"/>
-                    <stop offset="1" style="stop-color: rgb(141, 41, 41);"/>
-                </radialGradient>
-                <linearGradient id="gradient-16" gradientUnits="userSpaceOnUse" x1="79.232" y1="148.661" x2="79.232" y2="267.785" gradientTransform="matrix(0.025831, -0.999666, 0.153237, 0.00396, 43.953685, 274.434674)">
-                    <stop offset="0" style="stop-color: #bada55"/>
-                    <stop offset="1" style="stop-color: rgb(59, 72, 14);"/>
-                </linearGradient>
-            </defs>
-            <path d="M 73.281 159.571 C 72.647 190.375 75.055 224.982 80.506 263.392 C 81.129 267.785 93.817 263.392 93.817 263.392 C 92.284 264.35 81.135 187.678 88.112 161.093 C 90.388 152.419 77.266 148.661 73.281 159.571 Z" style="stroke: rgba(0, 0, 0, 0); fill: url(#gradient-16);">
-                <animate id='animate0' begin='0s' fill='freeze' attributeName='d' dur='12000ms' to="M 69.281 159.571 C 68.647 190.375 71.055 224.982 76.506 263.392 C 77.129 267.785 89.817 263.392 89.817 263.392 C 88.284 264.35 77.135 187.678 84.112 161.093 C 86.388 152.419 73.266 148.661 69.281 159.571 Z"/>
-            </path>
-        </svg>
-        <button id="next1" class="hidden" onclick="goToLetters()">Цааш</button>
+    <div id="scene1" class="active-scene">
+      	<div class="garden-container">
+            <div class="night-sky"></div>
+            <div class="stars"></div>
+            <div class="clouds"></div>
+            <div class="ground"></div>
+            <div class="garden">
+                </div>
+            <div class="fireflies"></div>
+        </div>
+      <button id="next1" class="nav-btn hidden" onclick="goToLetters()">Цааш</button>
     </div>
 
     <div id="scene2" class="scene hidden">
