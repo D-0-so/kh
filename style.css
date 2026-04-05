@@ -1,75 +1,164 @@
-/* Ерөнхий */
-body {
-    background-color: #333;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+/* =========================================
+   1. ТАНЫ ӨГСӨН "FLOWERS & FIREFLIES" КОД
+   ========================================= */
+:root {
+	--title: "Flowers & Fireflies";
+	--author: "Matt Cannon";
+	--contact: "mc@mattcannon.design";
+	--description: "An immersive night garden scene featuring flowers that bloom on prime number cycles...";
+	--last-modified: "2025-03-24";
 }
 
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #0a0e18;
+	overflow: hidden;
+	height: 100vh;
+	font-family: "Poppins", sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+
+.garden-container {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	background: linear-gradient(to bottom, #030614 0%, #0a1128 25%, #172449 50%, #1f2e58 75%, #28334f 100%);
+}
+
+.night-sky, .stars, .clouds, .garden {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.star {
+	position: absolute;
+	background-color: white;
+	border-radius: 50%;
+	opacity: 0;
+	animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+}
+
+.ground {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 50%;
+	background: linear-gradient(to bottom, #2d1d15, #211510);
+	z-index: 1;
+	border-radius: 50% 70% 0 0 / 40px;
+}
+
+.flower {
+	position: absolute;
+	transform-origin: bottom center;
+	z-index: 2;
+	--scale: 1;
+	animation: sway 4s ease-in-out infinite alternate;
+}
+
+.stem {
+	position: absolute;
+	bottom: 0;
+	width: 3px;
+	background: linear-gradient(to right, #2e5d20, #5cad4a, #2e5d20);
+	transform-origin: bottom center;
+}
+
+.firefly {
+	position: absolute;
+	width: 4px;
+	height: 4px;
+	background-color: #fff9c4;
+	border-radius: 50%;
+	filter: blur(2px);
+	box-shadow: 0 0 10px #fff9c4;
+	z-index: 3;
+}
+
+/* --- Анимацууд --- */
+@keyframes sway {
+	0% { transform: scale(var(--scale)) rotate(-3deg); }
+	100% { transform: scale(var(--scale)) rotate(3deg); }
+}
+
+@keyframes fireflyFloat {
+	0%, 100% { transform: translate(0, 0); }
+	50% { transform: translate(var(--x1, 10px), var(--y1, -10px)); }
+}
+
+@keyframes twinkle {
+	0%, 100% { opacity: 0.1; }
+	50% { opacity: 0.7; }
+}
+
+/* =========================================
+   2. ТОРТ БОЛОН ЗАХИАНЫ ХЭСЭГ (Scene Logic)
+   ========================================= */
+
 .scene {
-    display: flex;
+    width: 100%;
+    height: 100vh;
+    display: none; /* Нууц хэсгүүд */
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.hidden { display: none !important; }
-
-button {
-    padding: 12px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    margin-top: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+.scene.active {
+    display: flex;
 }
 
+.hidden { display: none !important; }
+
+/* Захианы хайрцаг */
 .letter-box {
     background: white;
     color: #333;
     padding: 30px;
     border-radius: 15px;
-    max-width: 80%;
+    max-width: 400px;
     text-align: center;
     line-height: 1.8;
-    white-space: pre-wrap;
+    z-index: 10;
 }
 
 /* ТОРТНЫ ХЭСЭГ */
 .cake { position: relative; width: 250px; height: 200px; }
-.plate { width: 270px; height: 110px; position: absolute; bottom: -10px; left: -10px; background-color: #ccc; border-radius: 50%; box-shadow: 0 5px 40px rgba(0,0,0,0.5); }
-.layer { position: absolute; width: 250px; height: 100px; border-radius: 50%; background-color: #553c13; box-shadow: 0 2px 0 #614516, 0 10px 0 #39280d, 0 20px 0 #2e200a, 0 30px 0 #231908; }
+.plate { width: 270px; height: 110px; position: absolute; bottom: -10px; left: -10px; background-color: #ccc; border-radius: 50%; }
+.layer { position: absolute; width: 250px; height: 100px; border-radius: 50%; background-color: #553c13; }
 .layer-top { top: 0; }
 .layer-middle { top: 33px; }
 .layer-bottom { top: 66px; }
-.icing { top: 2px; left: 5px; background-color: #f0e4d0; width: 240px; height: 90px; border-radius: 50%; position: absolute; z-index: 2; }
-.icing:before { content: ""; position: absolute; top: 4px; right: 5px; bottom: 6px; left: 5px; background-color: #f5ede1; border-radius: 50%; z-index: 1; }
-.drip { position: absolute; width: 50px; height: 60px; background-color: #f0e4d0; border-radius: 0 0 25px 25px; }
-.drip1 { top: 53px; left: 5px; transform: skewY(15deg); height: 48px; }
-.drip2 { top: 69px; left: 181px; transform: skewY(-15deg); }
-.drip3 { top: 54px; left: 90px; width: 80px; border-radius: 0 0 40px 40px; }
-.candle { background-color: #7B020B; width: 16px; height: 50px; border-radius: 8px/4px; position: absolute; top: -20px; left: 50%; margin-left: -8px; z-index: 10; }
-.flame { position: absolute; background-color: orange; width: 15px; height: 35px; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; top: -34px; left: 50%; margin-left: -7.5px; box-shadow: 0 0 20px orange; animation: flicker 0.6s infinite alternate; }
+.icing { position: absolute; top: 2px; left: 5px; background-color: #f0e4d0; width: 240px; height: 90px; border-radius: 50%; z-index: 2; }
+.candle { background-color: #7B020B; width: 16px; height: 50px; position: absolute; top: -20px; left: 50%; margin-left: -8px; z-index: 10; border-radius: 4px; }
+.flame { position: absolute; background-color: orange; width: 15px; height: 35px; border-radius: 50% 50% 20% 20%; top: -34px; left: 50%; margin-left: -7.5px; box-shadow: 0 0 20px orange; animation: flicker 0.6s infinite alternate; }
 
 @keyframes flicker {
-    from { transform: scale(1); opacity: 0.8; }
-    to { transform: scale(1.1) skewX(5deg); opacity: 1; }
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
 }
 
-/* ЗУРАГ & ОД */
-.img-container { position: relative; width: 300px; height: 300px; border: 5px solid white; background: #000; }
-.img-container img { width: 100%; height: 100%; object-fit: cover; }
-.star-shooting { position: absolute; width: 2px; height: 2px; background: white; animation: shoot 2s infinite; }
-
-@keyframes shoot {
-    0% { transform: translate(300px, -50px); opacity: 1; }
-    100% { transform: translate(-100px, 350px); opacity: 0; }
+/* Товчлуур */
+.nav-btn {
+    padding: 12px 24px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    z-index: 100;
 }
