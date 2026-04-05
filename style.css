@@ -1,120 +1,139 @@
 /* =========================================
-   1. ТАНЫ ӨГСӨН "FLOWERS & FIREFLIES" КОД
+   1. СУУРЬ БОЛОН ЦЭЦЭРЛЭГИЙН ХЭСЭГ
    ========================================= */
 :root {
-	--title: "Flowers & Fireflies";
-	--author: "Matt Cannon";
-	--contact: "mc@mattcannon.design";
-	--description: "An immersive night garden scene featuring flowers that bloom on prime number cycles...";
-	--last-modified: "2025-03-24";
+    --title: "Flowers & Fireflies";
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-	background-color: #0a0e18;
-	overflow: hidden;
-	height: 100vh;
-	font-family: "Poppins", sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	color: white;
+    background-color: #0a0e18;
+    overflow: hidden;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: white;
 }
 
 .garden-container {
-	position: relative;
-	width: 100%;
-	height: 100vh;
-	overflow: hidden;
-	background: linear-gradient(to bottom, #030614 0%, #0a1128 25%, #172449 50%, #1f2e58 75%, #28334f 100%);
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #030614 0%, #0a1128 25%, #172449 50%, #1f2e58 75%, #28334f 100%);
 }
 
-.night-sky, .stars, .clouds, .garden {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+.night-sky, .stars, .clouds, .garden, .fireflies {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
+/* Одод болон Үүл */
 .star {
-	position: absolute;
-	background-color: white;
-	border-radius: 50%;
-	opacity: 0;
-	animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: var(--min-opacity, 0.1);
+    animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+    animation-delay: var(--twinkle-delay, 0s);
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    filter: blur(30px);
+    z-index: 0;
 }
 
 .ground {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 50%;
-	background: linear-gradient(to bottom, #2d1d15, #211510);
-	z-index: 1;
-	border-radius: 50% 70% 0 0 / 40px;
-}
-
-.flower {
-	position: absolute;
-	transform-origin: bottom center;
-	z-index: 2;
-	--scale: 1;
-	animation: sway 4s ease-in-out infinite alternate;
-}
-
-.stem {
-	position: absolute;
-	bottom: 0;
-	width: 3px;
-	background: linear-gradient(to right, #2e5d20, #5cad4a, #2e5d20);
-	transform-origin: bottom center;
-}
-
-.firefly {
-	position: absolute;
-	width: 4px;
-	height: 4px;
-	background-color: #fff9c4;
-	border-radius: 50%;
-	filter: blur(2px);
-	box-shadow: 0 0 10px #fff9c4;
-	z-index: 3;
-}
-
-/* --- Анимацууд --- */
-@keyframes sway {
-	0% { transform: scale(var(--scale)) rotate(-3deg); }
-	100% { transform: scale(var(--scale)) rotate(3deg); }
-}
-
-@keyframes fireflyFloat {
-	0%, 100% { transform: translate(0, 0); }
-	50% { transform: translate(var(--x1, 10px), var(--y1, -10px)); }
-}
-
-@keyframes twinkle {
-	0%, 100% { opacity: 0.1; }
-	50% { opacity: 0.7; }
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: linear-gradient(to bottom, #1a110a, #000000);
+    z-index: 1;
+    border-radius: 50% 50% 0 0 / 20px;
 }
 
 /* =========================================
-   2. ТОРТ БОЛОН ЗАХИАНЫ ХЭСЭГ (Scene Logic)
+   2. ЦЭЦЭГНИЙ НАРИЙН АНИМАЦИ (JS-д зориулсан)
    ========================================= */
+.flower {
+    position: absolute;
+    transform-origin: bottom center;
+    z-index: 2;
+}
 
+.stem {
+    position: absolute;
+    bottom: 0;
+    width: 3px;
+    transform-origin: bottom center;
+    transition: height 2s ease-out;
+}
+
+.petal {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+    z-index: 5;
+}
+
+.center {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 1s, transform 1s;
+    z-index: 6;
+}
+
+.leaf {
+    position: absolute;
+    opacity: 0;
+    transform-origin: left center;
+    transition: all 1s;
+}
+
+.leaf-shape {
+    width: 100%;
+    height: 100%;
+}
+
+.firefly {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: #fff9c4;
+    border-radius: 50%;
+    filter: blur(1px);
+    box-shadow: 0 0 10px #fff9c4;
+    opacity: 0;
+    z-index: 10;
+    transition: opacity 0.5s;
+}
+
+/* =========================================
+   3. SCENE LOGIC (Хуудас шилжилт)
+   ========================================= */
 .scene {
     width: 100%;
     height: 100vh;
-    display: none; /* Нууц хэсгүүд */
-    flex-direction: column;
-    align-items: center;
+    display: none;
+    position: relative;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
 }
 
 .scene.active {
@@ -123,42 +142,16 @@ body {
 
 .hidden { display: none !important; }
 
-/* Захианы хайрцаг */
-.letter-box {
-    background: white;
-    color: #333;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 400px;
-    text-align: center;
-    line-height: 1.8;
-    z-index: 10;
-}
-
-/* ТОРТНЫ ХЭСЭГ */
-.cake { position: relative; width: 250px; height: 200px; }
-.plate { width: 270px; height: 110px; position: absolute; bottom: -10px; left: -10px; background-color: #ccc; border-radius: 50%; }
-.layer { position: absolute; width: 250px; height: 100px; border-radius: 50%; background-color: #553c13; }
-.layer-top { top: 0; }
-.layer-middle { top: 33px; }
-.layer-bottom { top: 66px; }
-.icing { position: absolute; top: 2px; left: 5px; background-color: #f0e4d0; width: 240px; height: 90px; border-radius: 50%; z-index: 2; }
-.candle { background-color: #7B020B; width: 16px; height: 50px; position: absolute; top: -20px; left: 50%; margin-left: -8px; z-index: 10; border-radius: 4px; }
-.flame { position: absolute; background-color: orange; width: 15px; height: 35px; border-radius: 50% 50% 20% 20%; top: -34px; left: 50%; margin-left: -7.5px; box-shadow: 0 0 20px orange; animation: flicker 0.6s infinite alternate; }
-
-@keyframes flicker {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
-}
-
-/* Товчлуур */
+/* Товчлуурууд */
 .nav-btn {
-    padding: 12px 24px;
-    background: #ff4d4d;
+    position: absolute;
+    bottom: 10%;
+    z-index: 1000;
+    padding: 12px 35px;
+    background: #ff4757;
     color: white;
     border: none;
     border-radius: 30px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 20px;
-    z-index: 100;
-}
+    box-shadow: 0 5px 15px rgba(2
