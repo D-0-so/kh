@@ -2,68 +2,67 @@
 <html lang="mn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Special</title>
+    <title>Flowers & Fireflies</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <audio id="audio" src="3.mp3"></audio>
+    <audio id="audio" src="music.mp3" loop></audio>
 
-    <div id="scene1" class="active-scene">
-      	<div class="garden-container">
+    <div id="scene1" class="scene active">
+        <div class="garden-container">
             <div class="night-sky"></div>
             <div class="stars"></div>
             <div class="clouds"></div>
             <div class="ground"></div>
-            <div class="garden">
-                </div>
+            <div class="garden"></div>
             <div class="fireflies"></div>
         </div>
-      <button id="next1" class="nav-btn hidden" onclick="goToLetters()">Цааш</button>
+        <button id="next1" class="nav-btn hidden" onclick="goToLetters()">Цааш</button>
     </div>
 
     <div id="scene2" class="scene hidden">
-        <div id="letterBtns">
-            <button id="lBtn1" onclick="openLetter(1)">Захиа 1</button>
-            <button id="lBtn2" onclick="openLetter(2)">Захиа 2</button>
-        </div>
-        <div id="letterDisplay" class="hidden letter-box">
-            <p id="textContent"></p>
-            <button onclick="closeLetter()">Буцах / Цааш</button>
+        <div class="letter-box">
+            <div id="letterBtns">
+                <button id="lBtn1" class="action-btn" onclick="openLetter(1)">Захиа 1</button>
+                <button id="lBtn2" class="action-btn" onclick="openLetter(2)">Захиа 2</button>
+            </div>
+            <div id="letterDisplay" class="hidden">
+                <p id="textContent" style="white-space: pre-wrap; color: #333;"></p>
+                <button class="action-btn" onclick="closeLetter()">Буцах / Цааш</button>
+            </div>
         </div>
     </div>
 
-    <div id="scene3" class="scene hidden letter-box">
-        <p>내가 아는 사람들 중에서 가장 멋지고 노력하는 너에게, 이 세상에 태어나 이렇게 특별한 사람이 되어줘서 고마워. 생일 진심으로 축하해!</p>
-        <button onclick="goToCake()">Цааш</button>
+    <div id="scene3" class="scene hidden">
+        <h2 style="margin-bottom: 20px;">Танд зориулсан бэлэг...</h2>
+        <button class="action-btn" onclick="goToCake()">Бэлгийг нээх</button>
     </div>
 
     <div id="scene4" class="scene hidden">
-        <div class="cake">
-            <div class="plate"></div>
-            <div class="layer layer-bottom"></div>
-            <div class="layer layer-middle"></div>
-            <div class="layer layer-top"></div>
-            <div class="icing"></div>
-            <div class="drip drip1"></div>
-            <div class="drip drip2"></div>
-            <div class="drip drip3"></div>
-            <div class="candle"><div class="flame"></div></div>
+        <div class="cake-container">
+            <div class="cake">
+                <div class="plate"></div>
+                <div class="layer layer-bottom"></div>
+                <div class="layer layer-middle"></div>
+                <div class="layer layer-top"></div>
+                <div class="icing"></div>
+                <div class="candle"><div class="flame"></div></div>
+            </div>
         </div>
-        <button id="cakeNext" class="hidden" onclick="goToPhoto()">Цааш</button>
+        <button id="cakeNext" class="nav-btn hidden" onclick="goToPhoto()">Дараагийнх</button>
     </div>
 
     <div id="scene5" class="scene hidden">
-        <div class="img-container">
-            <div class="star-shooting"></div>
-            <img src=".jpg" alt="Birthday Image">
+        <div class="photo-frame">
+            <p>Энд та өөрийн зураг эсвэл зурагтай контейнероо хийж болно</p>
         </div>
-        <button onclick="goToFinal()">Цааш</button>
+        <button class="nav-btn" onclick="goToFinal()">Төгсгөл</button>
     </div>
 
     <div id="scene6" class="scene hidden">
-        <h1>Баярлалаа ❤️</h1>
+        <h1>Төрсөн өдрийн мэдээ хүргэе! 🎂</h1>
     </div>
 
     <script src="script.js"></script>
